@@ -6,7 +6,7 @@ import {BuildOptions} from "./types/config";
 export default function buildLoaders({isDev}: BuildOptions): RuleSetRule[] {
 
     const fileLoaders = {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(png|jpe?g|gif|mp3)$/i,
         loader: 'file-loader',
         options: {
             name: '[path][name].[ext]',

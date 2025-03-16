@@ -2,6 +2,8 @@ import { FC, useEffect } from 'react';
 import styles from './KissAnimation.module.scss';
 import { IPlayer } from 'entities/player/model/types';
 import { PlayerAvatar } from 'entities/player/ui/PlayerAvatar/PlayerAvatar';
+import kissSound from 'shared/assets/sounds/kiss_sound.mp3';
+import kissImg from 'shared/assets/base_img/kiss.png';
 
 interface KissAnimationProps {
     activePlayer: IPlayer;
@@ -18,7 +20,7 @@ export const KissAnimation: FC<KissAnimationProps> = ({
                                                       }) => {
     useEffect(() => {
         if (isVisible) {
-            const audio = new Audio('shared/assets/sounds/kiss_sound.mp3');
+            const audio = new Audio(kissSound);
             audio.play();
 
             const timer = setTimeout(() => {
@@ -39,7 +41,7 @@ export const KissAnimation: FC<KissAnimationProps> = ({
                 </div>
 
                 <div className={styles.kissIcon}>
-                    <img src="../../../../shared/assets/base_img/kiss.png" alt="Kiss" />
+                    <img src={kissImg} alt="Kiss" />
                 </div>
 
                 <div className={`${styles.playerWrapper} ${styles.playerRight}`}>

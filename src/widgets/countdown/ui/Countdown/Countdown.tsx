@@ -14,14 +14,16 @@ export const Countdown: FC<CountdownProps> = ({
                                                   className
                                               }) => {
     const [count, setCount] = useState(3);
+    const [isCompleted, setIsCompleted] = useState(false); // добавлено состояние для отслеживания завершения
 
     useEffect(() => {
-        if (isActive) {
+        if (isActive && !isCompleted) {
             const interval = setInterval(() => {
                 setCount((prev) => {
                     if (prev <= 1) {
                         clearInterval(interval);
                         onComplete();
+                        setIsCompleted(true); // устанавливаем состояние завершения
                         return 3; // Сбрасываем для следующего использования
                     }
                     return prev - 1;
@@ -30,10 +32,16 @@ export const Countdown: FC<CountdownProps> = ({
 
             return () => clearInterval(interval);
         }
-    }, [isActive, onComplete]);
+    }, [isActive, onComplete, isCompleted]);
 
-    // Если счётчик неактивен, не отображаем компонент
-    if (!isActive) return null;
+    useEffect(() => {
+        if (!isActive) {
+            setIsCompleted(false); // сбрасываем состояние завершения при деактивации
+        }
+    }, [isActive]);
+
+    // Если счётчик неактивен или завершен, не отображаем компонент
+    if (!isActive || isCompleted) return null;
 
     return (
         <div className={ClassNames(styles.countdown, {}, [className])}>

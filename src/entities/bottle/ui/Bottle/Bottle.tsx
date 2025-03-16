@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import styles from './Bottle.module.scss';
+import bottleImg from 'shared/assets/base_img/bottle.png';
 
 interface BottleProps {
     rotation: number;
@@ -20,7 +21,7 @@ export const Bottle: FC<BottleProps> = ({
     return (
         <div className={`${styles.bottle} ${className || ''}`} style={bottleStyle}>
             <img
-                src="/assets/images/bottle.png"
+                src={bottleImg}
                 alt="Bottle"
                 className={styles.image}
             />

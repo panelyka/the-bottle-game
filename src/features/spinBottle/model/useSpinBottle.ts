@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { IPlayer } from 'entities/player/model/types';
 import { BOTTLE_SPIN_DURATION } from 'shared/config/constants';
+import spinAudio from 'shared/assets/sounds/spinning_sound.mp3';
 
 interface UseSpinBottleProps {
     players: IPlayer[];
@@ -17,7 +18,7 @@ export const useSpinBottle = ({
     const [rotation, setRotation] = useState(0);
 
     const playSpinSound = () => {
-        const audio = new Audio('/shared/assets/sounds/spinning_sound.mp3');
+        const audio = new Audio(spinAudio);
         audio.play();
     };
 
@@ -37,12 +38,17 @@ export const useSpinBottle = ({
         const anglePerPlayer = 360 / totalPlayers;
 
         // Угол, указывающий на выбранного игрока
-        const targetAngle = playerIndex * anglePerPlayer;
+        const targetPlayerAngle = playerIndex * anglePerPlayer;
 
         // Добавляем дополнительные вращения для эффекта
         const additionalRotations = 5 * 360; // 5 полных оборотов
-        const newRotation = rotation + additionalRotations + targetAngle;
 
+        // Вычисляем новый угол с учетом текущего угла
+        const currentRotation = rotation % 360;
+        const rotationAdjustment = currentRotation > targetPlayerAngle ? 360 - currentRotation + targetPlayerAngle : targetPlayerAngle - currentRotation;
+        const newRotation = rotation + additionalRotations + rotationAdjustment;
+
+        console.log(playerIndex, targetPlayerAngle, newRotation);
         setRotation(newRotation);
 
         setTimeout(() => {
