@@ -24,7 +24,6 @@ export const useSpinBottle = ({
 
     const spinBottle = useCallback(() => {
         if (isSpinning) return;
-
         setIsSpinning(true);
         playSpinSound();
 
@@ -48,7 +47,6 @@ export const useSpinBottle = ({
         const rotationAdjustment = currentRotation > targetPlayerAngle ? 360 - currentRotation + targetPlayerAngle : targetPlayerAngle - currentRotation;
         const newRotation = rotation + additionalRotations + rotationAdjustment;
 
-        console.log(playerIndex, targetPlayerAngle, newRotation);
         setRotation(newRotation);
 
         setTimeout(() => {
